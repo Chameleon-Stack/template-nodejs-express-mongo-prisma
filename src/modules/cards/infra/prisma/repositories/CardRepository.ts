@@ -27,7 +27,7 @@ export class CardRepository implements ICardRepository {
     const { id, ...data } = card;
 
     return prisma.cards.update({
-      where: { id }, // Use _id for MongoDB
+      where: { id },
       data,
     });
   }
