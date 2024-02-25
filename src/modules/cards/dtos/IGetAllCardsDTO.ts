@@ -4,4 +4,5 @@ export interface IGetAllCardsDTO {
   title?: string;
   description?: string;
   id?: string;
+  category_ids?: string[];
 }

@@ -38,6 +38,11 @@ export class CreateCardService {
       user_id: user.id,
     });
 
+    user.card_ids = user.card_ids || [];
+    user.card_ids.push(card.id);
+
+    await this.userRepository.update(user);
+
     return card;
   }
 }

@@ -36,6 +36,10 @@ export class CreateCategoryService {
       user_id: user.id,
     });
 
+    user.category_ids = user.category_ids || [];
+
+    user.category_ids.push(card.id);
+
     return card;
   }
 }

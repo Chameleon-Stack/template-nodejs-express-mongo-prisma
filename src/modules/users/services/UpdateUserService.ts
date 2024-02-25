@@ -43,7 +43,11 @@ export class UpdateUserService {
     }
 
     if (photo) {
-      fs.rmdirSync(path.join(__dirname, `../../../../uploads/${user.photo}`));
+      const photoPath = `../../../../uploads/${user.photo}`;
+
+      if (fs.existsSync(photoPath)) {
+        fs.unlinkSync(photoPath);
+      }
 
       user.photo = photo;
     }

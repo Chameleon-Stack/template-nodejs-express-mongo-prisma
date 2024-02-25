@@ -7,13 +7,14 @@ import express, {
   RequestHandler,
   Response,
 } from 'express';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../../../swagger.json';
 import LibError from '../../errors/LibError';
 import { router as routes } from './routes';
 
 const app = express();
-
+app.use(cors());
 app.use(express.json() as RequestHandler);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
