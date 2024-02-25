@@ -1,13 +1,14 @@
 import { inject, injectable } from 'tsyringe';
 import LibError from '../../../shared/errors/LibError';
-import { ICardRepository } from '../repositories/ICardRepository';
 import { IUserRepository } from '../../users/repositories/IUserRepository';
+import { ICardRepository } from '../repositories/ICardRepository';
 
 @injectable()
 export class DeleteCardService {
   constructor(
     @inject('CardRepository')
     private cardRepository: ICardRepository,
+
     @inject('UserRepository')
     private userRepository: IUserRepository,
   ) {}
@@ -25,13 +26,13 @@ export class DeleteCardService {
 
     const user = await this.userRepository.findById(card.user_id);
 
-    if (!user) {
-      throw new LibError('The user does not exist', 404);
+    if (user) {
+      user.card_ids =
+        user.card_ids?.filter(card_id => card_id !== card.id) || [];
+
+      await this.userRepository.update(user);
     }
 
-    user.card_ids = user.card_ids?.filter(card_id => card_id !== card.id) || [];
-
-    await this.userRepository.update(user);
     await this.cardRepository.delete(card);
   }
 }

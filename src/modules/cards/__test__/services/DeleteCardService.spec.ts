@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import { v4 as uuidv4 } from 'uuid';
 import LibError from '../../../../shared/errors/LibError';
+import { IUserRepository } from '../../../users/repositories/IUserRepository';
+import { UserRepositoryInMemory } from '../../../users/repositories/inMemory/UserRepositoryInMemory';
 import { ICreateCardDTO } from '../../dtos/ICreateCardDTO';
 import { ICardRepository } from '../../repositories/ICardRepository';
 import { CardRepositoryInMemory } from '../../repositories/inMemory/CardRepositoryInMemory';
@@ -8,11 +10,16 @@ import { DeleteCardService } from '../../services/DeleteCardService';
 
 describe('Delete card service', () => {
   let cardRepositoryInMemory: ICardRepository;
+  let userRepositoryInMemory: IUserRepository;
   let deleteCardUseCase: DeleteCardService;
 
   beforeEach(() => {
     cardRepositoryInMemory = new CardRepositoryInMemory();
-    deleteCardUseCase = new DeleteCardService(cardRepositoryInMemory);
+    userRepositoryInMemory = new UserRepositoryInMemory();
+    deleteCardUseCase = new DeleteCardService(
+      cardRepositoryInMemory,
+      userRepositoryInMemory,
+    );
   });
 
   it('should be able to delete card', async () => {

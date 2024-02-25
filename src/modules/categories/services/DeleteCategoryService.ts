@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import LibError from '../../../shared/errors/LibError';
-import { ICategoryRepository } from '../repositories/ICategoryRepository';
 import { IUserRepository } from '../../users/repositories/IUserRepository';
+import { ICategoryRepository } from '../repositories/ICategoryRepository';
 
 @injectable()
 export class DeleteCategoryService {
@@ -26,15 +26,13 @@ export class DeleteCategoryService {
 
     const user = await this.userRepository.findById(category.user_id);
 
-    if (!user) {
-      throw new LibError('The user does not exist', 404);
+    if (user) {
+      user.category_ids =
+        user?.category_ids?.filter(categoryId => categoryId !== category.id) ||
+        [];
+
+      await this.userRepository.update(user);
     }
-
-    user.category_ids =
-      user?.category_ids?.filter(categoryId => categoryId !== category.id) ||
-      [];
-
-    await this.userRepository.update(user);
 
     await this.categoryRepository.delete(category);
   }

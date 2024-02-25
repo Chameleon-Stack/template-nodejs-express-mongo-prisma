@@ -1,4 +1,6 @@
 import { genSaltSync, hashSync } from 'bcryptjs';
+import fs from 'fs';
+import path from 'path';
 import { inject, injectable } from 'tsyringe';
 import LibError from '../../../shared/errors/LibError';
 import { ICreateUserDTO } from '../dtos/ICreateUserDTO';
@@ -26,6 +28,10 @@ export class CreateUserService {
 
     if (foundUser) {
       throw new LibError('User already exists!');
+    }
+
+    if (photo) {
+      fs.rmdirSync(path.join(__dirname, `../../../../uploads/${photo}`));
     }
 
     const salt = genSaltSync(8);
