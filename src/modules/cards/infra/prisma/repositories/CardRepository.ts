@@ -25,10 +25,10 @@ export class CardRepository implements ICardRepository {
 
   async update(card: ICard): Promise<ICard> {
     const { id, ...data } = card;
-
+    const { categories, ...rest } = data;
     return prisma.cards.update({
       where: { id },
-      data,
+      data: rest,
     });
   }
 
@@ -43,7 +43,7 @@ export class CardRepository implements ICardRepository {
     title,
     user_id,
   }: IGetAllCardsDTO): Promise<ICard[]> {
-    return prisma.cards.findMany({
+    const cards = await prisma.cards.findMany({
       where: {
         user_id,
         id: id ? { equals: id } : undefined,
@@ -54,6 +54,25 @@ export class CardRepository implements ICardRepository {
         title: title ? { contains: title.toLowerCase() } : undefined,
       },
     });
+
+    const cardsWithCategories = await Promise.all(
+      cards.map(async card => {
+        const categories = await prisma.category.findMany({
+          where: {
+            id: {
+              in: card.category_ids,
+            },
+          },
+        });
+
+        return {
+          ...card,
+          categories,
+        };
+      }),
+    );
+
+    return cardsWithCategories;
   }
 
   async delete(card: ICard): Promise<void> {

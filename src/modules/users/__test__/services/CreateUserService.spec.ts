@@ -1,3 +1,4 @@
+import fs from 'fs';
 import 'reflect-metadata';
 import LibError from '../../../../shared/errors/LibError';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDTO';
@@ -5,6 +6,8 @@ import { IUser } from '../../dtos/IUser';
 import { IUserRepository } from '../../repositories/IUserRepository';
 import { UserRepositoryInMemory } from '../../repositories/inMemory/UserRepositoryInMemory';
 import { CreateUserService } from '../../services/CreateUserService';
+
+jest.mock('fs');
 
 describe('Create user service', () => {
   let userRepositoryInMemory: IUserRepository;
@@ -16,14 +19,18 @@ describe('Create user service', () => {
   });
 
   it('should be able to create user', async () => {
+    fs.rmdirSync = jest.fn(() => 'mocked value');
+
     const user: ICreateUserDTO = {
       email: 'example@example.com',
       password: '1234',
       name: 'User test',
+      photo: 'photo.png',
     };
 
     const userCreated = (await createUserService.execute(user)) as IUser;
 
+    expect(fs.rmdirSync).toHaveBeenCalled();
     expect(userCreated).toHaveProperty('id');
     expect(userCreated.name).toEqual(user.name);
     expect(userCreated.email).toEqual(user.email);

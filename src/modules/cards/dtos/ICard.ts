@@ -10,5 +10,6 @@ export interface ICard {
   updated_at: Date;
   user_id: string;
   categories?: ICategory[];
+  category_ids?: string[];
   user?: IUser;
 }

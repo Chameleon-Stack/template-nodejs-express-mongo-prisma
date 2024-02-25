@@ -18,11 +18,12 @@ describe('Update user controller test', () => {
       {} as IUser,
     );
 
-    const response = await request(app).patch(`/user`).send({
+    const response = await request(app).patch(`/user/uuid`).send({
       email: 'example@example.com',
       password: '1234',
       name: 'User test',
     });
+    console.log(response);
 
     expect(response.status).toEqual(201);
   });

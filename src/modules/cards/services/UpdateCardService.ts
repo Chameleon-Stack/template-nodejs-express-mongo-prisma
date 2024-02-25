@@ -54,6 +54,10 @@ export class UpdateCardService {
       card.status = status;
     }
 
+    if (category_ids) {
+      card.category_ids = category_ids;
+    }
+
     await this.cardRepository.update(card);
 
     return card;

@@ -10,5 +10,7 @@ export interface IUser {
   password: string;
   photo: string | null;
   category?: ICategory[];
+  category_ids?: string[];
   cards?: ICard[];
+  card_ids?: string[];
 }

@@ -1,18 +1,23 @@
 import 'reflect-metadata';
 import { v4 as uuidv4 } from 'uuid';
 import LibError from '../../../../shared/errors/LibError';
+import { IUserRepository } from '../../../users/repositories/IUserRepository';
+import { UserRepositoryInMemory } from '../../../users/repositories/inMemory/UserRepositoryInMemory';
 import { ICategoryRepository } from '../../repositories/ICategoryRepository';
 import { CategoryRepositoryInMemory } from '../../repositories/inMemory/CategoryRepositoryInMemory';
 import { DeleteCategoryService } from '../../services/DeleteCategoryService';
 
 describe('Delete category service', () => {
   let categoryRepositoryInMemory: ICategoryRepository;
+  let userRepositoryInMemory: IUserRepository;
   let deleteCategoryService: DeleteCategoryService;
 
   beforeEach(() => {
     categoryRepositoryInMemory = new CategoryRepositoryInMemory();
+    userRepositoryInMemory = new UserRepositoryInMemory();
     deleteCategoryService = new DeleteCategoryService(
       categoryRepositoryInMemory,
+      userRepositoryInMemory,
     );
   });
 

@@ -8,7 +8,7 @@ export class CreateCardController {
 
     const { description, title, status } = request.body;
 
-    const user_id = request.params.id;
+    const { user_id } = request.params;
 
     const bets = await createCardService.execute({
       user_id,
