@@ -40,6 +40,8 @@ export class CreateCategoryService {
 
     user.category_ids.push(card.id);
 
+    await this.userRepository.update(user);
+
     return card;
   }
 }
