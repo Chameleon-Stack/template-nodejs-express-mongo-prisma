@@ -20,6 +20,7 @@ export class CreateCardService {
     description,
     title,
     status,
+    category_ids,
   }: ICreateCardServiceDTO): Promise<ICard> {
     if (!user_id || !description || !title || !status) {
       throw new LibError('Error in the creation of the card!');
@@ -36,6 +37,7 @@ export class CreateCardService {
       title,
       description,
       user_id: user.id,
+      category_ids: category_ids || [],
     });
 
     user.card_ids = user.card_ids || [];
