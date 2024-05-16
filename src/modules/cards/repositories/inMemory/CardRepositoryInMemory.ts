@@ -12,6 +12,7 @@ export class CardRepositoryInMemory implements ICardRepository {
     status,
     title,
     user_id,
+    category_ids,
   }: ICreateCardDTO): Promise<ICard> {
     const card = {} as ICard;
 
@@ -21,6 +22,7 @@ export class CardRepositoryInMemory implements ICardRepository {
       status,
       title,
       user_id,
+      category_ids,
     });
 
     this.cards.push(card);
