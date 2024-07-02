@@ -55,8 +55,12 @@ The first step is to set up Docker. For each operating system, you need to follo
 To install the container that will run in the project, you need to enter the following command in the terminal:
 
 ```
-docker run --name mongo -e MONGO_PASSWORD=mypassword -p 27017:27017 -d mongo
+cd docker
 ```
+
+And then run the following command how file "README.md"
+
+File and step by:https://github.com/prisma/prisma/tree/4f39f9f5004f0e6df3ae84e473e0941241fd6ffc/docker
 
 #### In this step, install a DBMS and connect with docker credentials
 
