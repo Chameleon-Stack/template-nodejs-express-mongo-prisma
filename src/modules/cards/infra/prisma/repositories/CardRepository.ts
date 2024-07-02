@@ -10,6 +10,7 @@ export class CardRepository implements ICardRepository {
     status,
     title,
     user_id,
+    category_ids,
   }: ICreateCardDTO): Promise<ICard> {
     return prisma.cards.create({
       data: {
@@ -17,6 +18,7 @@ export class CardRepository implements ICardRepository {
         status,
         title,
         user_id,
+        category_ids,
         created_at: new Date(),
         updated_at: new Date(),
       },

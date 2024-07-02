@@ -6,7 +6,7 @@ export class CreateCardController {
   async handle(request: Request, response: Response): Promise<Response> {
     const createCardService = container.resolve(CreateCardService);
 
-    const { description, title, status } = request.body;
+    const { description, title, status, category_ids } = request.body;
 
     const { user_id } = request.params;
 
@@ -15,6 +15,7 @@ export class CreateCardController {
       description,
       title,
       status,
+      category_ids,
     });
 
     return response.status(201).json(bets);
