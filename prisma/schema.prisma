@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId // Using default auto-generated MongoDB ObjectId
+  id         String    @id @default(auto()) @db.ObjectId // Using default auto-generated MongoDB ObjectId
   created_at DateTime  @default(now())
   updated_at DateTime  @updatedAt
   name       String
@@ -20,7 +20,7 @@ model User {
 }
 
 model Cards {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId // Using default auto-generated MongoDB ObjectId
+  id           String         @id @default(auto()) @db.ObjectId // Using default auto-generated MongoDB ObjectId
   status       String
   title        String
   description  String
@@ -31,7 +31,7 @@ model Cards {
 }
 
 model Category {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId // Using default auto-generated MongoDB ObjectId
+  id           String         @id @default(auto()) @db.ObjectId // Using default auto-generated MongoDB ObjectId
   created_at   DateTime
   updated_at   DateTime
   name         String
@@ -41,7 +41,7 @@ model Category {
 }
 
 model migrations {
-  id        Int    @id @map("_id")
+  id        Int    @id
   timestamp BigInt
   name      String
 }
